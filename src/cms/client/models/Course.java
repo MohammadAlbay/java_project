@@ -15,6 +15,12 @@ import java.sql.*;
 public class Course extends Model {
     String courseId, title, description;
     int credits;
+    
+    public Course() {}
+    public Course(String email) {
+        get("course_id = '"+courseId+"';");
+    }
+    
     @Override
     public boolean save() {
         Database db = Database.getInstance();

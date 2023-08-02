@@ -5,13 +5,12 @@
  */
 package cms;
 
-import cms.client.Connection;
 import cms.client.models.Course;
 import cms.client.models.Instructor;
+import cms.client.models.InstructorsCourses;
 import cms.client.models.Student;
 import cms.client.ui.MainFrame;
 import cms.database.Database;
-import cms.server.Server;
 /**
  *
  * @author Moham
@@ -31,16 +30,14 @@ public class CMS {
             }
             
             Instructor ins = Instructor.getInstructor("email = 'alwaer@uot.com'");
-            Course course = new Course();
-            course.setCourseId("ITSE424");
-            course.setTitle("Design pattern");
-            course.setDescription("What ever");
-            course.setCredits(3);
-            //course.save();
-            course.delete();
+            Course course = new Course("ITSE424");
+            course.save();
+            //course.delete();
             //ins.setPassword("12233");
             //ins.update();
             //ins.delete();
+            InstructorsCourses s = new InstructorsCourses(ins, course, "summer/2022");
+            s.save();
             
             java.awt.EventQueue.invokeLater(() -> new MainFrame().setVisible(true));
         }

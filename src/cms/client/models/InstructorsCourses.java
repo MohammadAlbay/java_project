@@ -16,6 +16,7 @@ public class InstructorsCourses extends Model {
     Instructor instructor;
     Course course;
     String semester;
+    private InstructorsCourses() {}
     public InstructorsCourses(Instructor ins, Course cr, String sem) {
         instructor = ins;
         course = cr;
@@ -47,7 +48,24 @@ public class InstructorsCourses extends Model {
         if(st == null) return false;
         
         try {
-//            st.executeUpdate("UPDATE cms.courses SET course_id = '"+courseId+"', title = '"+title+"', `description` = '"+description+"', credits = "+credits+" where course_id = '"+courseId+"';");
+            st.executeUpdate("UPDATE cms.teacher_courses SET course_id = '"+course.getCourseId()+"', email = '"+instructor.getEmail()+"', semester = '"+semester+"' where course_id = '"+course.getCourseId()+"' AND email = '"+instructor.getEmail()+"';");
+            return true;
+        }
+        catch(Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+    
+    @Override
+    public boolean delete() {
+        Database db = Database.getInstance();
+        Statement st = db.getStatement();
+        if(st == null) return false;
+        
+        try {
+            st.executeUpdate("DELETE FROM cms.teacher_courses WHERE course_id = '"+course.getCourseId()+"' AND email = '"+instructor.getEmail()+"';");
+            st.close();
             return true;
         }
         catch(Exception e) {
@@ -63,17 +81,16 @@ public class InstructorsCourses extends Model {
         if(st == null) return null;
         String whereStatement = "";
         for(String s : v)
-            whereStatement += s+",";
+            whereStatement += s+"";
         try {
-//            ResultSet result =  st.executeQuery("SELECT course_id, title, `description`, credits FROM cms.courses where "+whereStatement.substring(0, whereStatement.length()-1)+";");
-//            if(!result.next())
-//                return null;
-//            else {
-//                setCourseId(result.getString("course_id"));
-//                setTitle(result.getString("title"));
-//                setDescription(result.getString("description"));
-//                setCredits(result.getInt("credits"));
-//            }
+            ResultSet result =  st.executeQuery("SELECT course_id, email, semester FROM cms.teacher_courses where "+whereStatement.substring(0, whereStatement.length()-1)+";");
+            if(!result.next())
+                return null;
+            else {
+                setCourse(new Course(result.getString("course_id")));
+                setInstructor(new Instructor(result.getString("email")));
+                setSemester(result.getString("semester"));
+            }
             return this;
         }
         catch(Exception e) {
@@ -89,26 +106,11 @@ public class InstructorsCourses extends Model {
     // GET
     public Course getCourse() {return course;}
     public Instructor getInstructor() {return instructor;}
+    public String getSemester() {return semester;}
     // SET
     public void setCourse(Course s) {course = s;}
     public void setInstructor(Instructor s) {instructor = s;}
-
-    @Override
-    public boolean delete() {
-        Database db = Database.getInstance();
-        Statement st = db.getStatement();
-        if(st == null) return false;
-        
-        try {
-            st.executeUpdate("DELETE FROM cms.courses WHERE course_id = '"+courseId+"';");
-            st.close();
-            return true;
-        }
-        catch(Exception e) {
-            e.printStackTrace();
-            return false;
-        }
-    }
+    public void setSemester(String s) {semester = s;}
     
     
     
@@ -116,7 +118,8 @@ public class InstructorsCourses extends Model {
     
     
     
-    public static InstructorsCourses getStudent(String... v) {
+    
+    public static InstructorsCourses getInstructorsCourses(String... v) {
         return (InstructorsCourses) new InstructorsCourses().get(v);
     } 
 

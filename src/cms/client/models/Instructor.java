@@ -15,6 +15,10 @@ import java.sql.*;
 public class Instructor extends Model {
     String email, firstName, lastName, birthDate, password;
 
+    public Instructor() {}
+    public Instructor(String email) {
+        get("email = '"+email+"';");
+    }
     @Override
     public boolean save() {
         Database db = Database.getInstance();
