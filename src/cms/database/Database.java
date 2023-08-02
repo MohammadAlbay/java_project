@@ -5,6 +5,7 @@
  */
 package cms.database;
 
+import java.io.IOException;
 import java.sql.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -25,7 +26,7 @@ public class Database {
             connection = DriverManager.getConnection(URL, USER, PASS);
             System.out.println("Connection works");
             
-            connection.close();
+            //connection.close();
         }
         catch(ClassNotFoundException | SQLException e) {
             e.printStackTrace();
@@ -38,7 +39,16 @@ public class Database {
         return instance;
     }
     
-    
+    public Statement getStatement() {
+        try {
+            Statement st = connection.createStatement();
+            return st;
+        }
+        catch(Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
     
     
     
@@ -49,7 +59,7 @@ public class Database {
         try {
             Class.forName(JDBC);
             conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/", USER, PASS);
-            System.out.println("Connection works");
+            System.out.println("[CMS] : Database Connectioned");
             if(checkDatabaseExistence(conn))
                 System.out.println("[CMS] : system is ready to use");
             else {
@@ -95,6 +105,8 @@ public class Database {
 "    first_name varchar(30) not null,\n" +
 "    last_name varchar(30) not null,\n" +
 "    birth_date varchar(30) not null,\n" +
+"    password varchar(30) not null,\n" +
+"    is_instructor int default 0,\n"+
 "    primary key(email)\n" +
 "); ");
         st.close();
@@ -116,7 +128,7 @@ public class Database {
         int effectedRows = st.executeUpdate("CREATE TABLE cms.student_courses (\n" +
 "	email varchar(50) not null,\n" +
 "    course_id char(7) not null,\n" +
-"    enroll_date varchar(30) not null,\n" +
+"    enroll_date date default now(),\n" +
 "    semester varchar(20) not null\n" +
 "); ");
         st.close();
@@ -126,7 +138,7 @@ public class Database {
         int effectedRows = st.executeUpdate("CREATE TABLE cms.teacher_courses (\n" +
 "	email varchar(50) not null,\n" +
 "    course_id char(7) not null,\n" +
-"    creation_date varchar(30) not null,\n" +
+"    creation_date date default now(),\n" +
 "    semester varchar(20) not null\n" +
 "); ");
         st.close();
