@@ -3,12 +3,13 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+            <file>file:/C:/Users/Moham/Desktop/project/CMS/src/cms/client/models/Instructor.java</file>
             <file>file:/C:/Users/Moham/Desktop/project/CMS/src/cms/CMS.java</file>
             <file>file:/C:/Users/Moham/Desktop/project/CMS/src/cms/client/ui/MainFrame.java</file>
-            <file>file:/C:/Users/Moham/Desktop/project/CMS/src/cms/server/Server.java</file>
-            <file>file:/C:/Users/Moham/Desktop/project/CMS/src/cms/client/Connection.java</file>
-            <file>file:/C:/Users/Moham/Desktop/project/CMS/src/cms/client/ui/RegisterFrame.java</file>
+            <file>file:/C:/Users/Moham/Desktop/project/CMS/src/cms/client/models/InstructorsCourses.java</file>
+            <file>file:/C:/Users/Moham/Desktop/project/CMS/src/cms/client/models/Course.java</file>
             <file>file:/C:/Users/Moham/Desktop/project/CMS/src/cms/database/Database.java</file>
+            <file>file:/C:/Users/Moham/Desktop/project/CMS/src/cms/client/ui/RegisterFrame.java</file>
         </group>
     </open-files>
 </project-private>

@@ -128,7 +128,7 @@ public class Database {
         int effectedRows = st.executeUpdate("CREATE TABLE cms.student_courses (\n" +
 "	email varchar(50) not null,\n" +
 "    course_id char(7) not null,\n" +
-"    enroll_date date default now(),\n" +
+"    enroll_date datetime default now(),\n" +
 "    semester varchar(20) not null\n" +
 "); ");
         st.close();
@@ -138,7 +138,7 @@ public class Database {
         int effectedRows = st.executeUpdate("CREATE TABLE cms.teacher_courses (\n" +
 "	email varchar(50) not null,\n" +
 "    course_id char(7) not null,\n" +
-"    creation_date date default now(),\n" +
+"    creation_date datetime default now(),\n" +
 "    semester varchar(20) not null\n" +
 "); ");
         st.close();

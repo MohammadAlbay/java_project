@@ -14,7 +14,10 @@ import java.sql.*;
  */
 public class Student extends Model {
     String email, firstName, lastName, birthDate, password;
-
+    public Student() {}
+    public Student(String email) {
+        get("email = '"+email+"'");
+    }
     @Override
     public boolean save() {
         Database db = Database.getInstance();
@@ -55,11 +58,9 @@ public class Student extends Model {
         Database db = Database.getInstance();
         Statement st = db.getStatement();
         if(st == null) return null;
-        String whereStatement = "";
-        for(String s : v)
-            whereStatement += s+",";
+        String whereStatement = super.generateConditionString(v);
         try {
-            ResultSet result =  st.executeQuery("SELECT email, first_name, last_name, birth_date, `password` FROM cms.users where "+whereStatement.substring(0, whereStatement.length()-1)+";");
+            ResultSet result =  st.executeQuery("SELECT email, first_name, last_name, birth_date, `password` FROM cms.users where "+whereStatement+";");
             if(!result.next())
                 return null;
             else {

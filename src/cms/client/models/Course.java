@@ -17,8 +17,8 @@ public class Course extends Model {
     int credits;
     
     public Course() {}
-    public Course(String email) {
-        get("course_id = '"+courseId+"';");
+    public Course(String id) {
+        get("course_id = '"+id+"'");
     }
     
     @Override
@@ -61,11 +61,10 @@ public class Course extends Model {
         Database db = Database.getInstance();
         Statement st = db.getStatement();
         if(st == null) return null;
-        String whereStatement = "";
-        for(String s : v)
-            whereStatement += s+",";
+        String whereStatement = super.generateConditionString(v);
+        
         try {
-            ResultSet result =  st.executeQuery("SELECT course_id, title, `description`, credits FROM cms.courses where "+whereStatement.substring(0, whereStatement.length()-1)+";");
+            ResultSet result =  st.executeQuery("SELECT course_id, title, `description`, credits FROM cms.courses where "+whereStatement+";");
             if(!result.next())
                 return null;
             else {
@@ -120,7 +119,7 @@ public class Course extends Model {
     
     
     
-    public static Course getStudent(String... v) {
+    public static Course getCourse(String... v) {
         return (Course) new Course().get(v);
     } 
 

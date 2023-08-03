@@ -15,5 +15,16 @@ public abstract class Model {
     abstract boolean delete();
     abstract Model get(String... v);
     abstract Model[] getAll(String... v);
-    
+    protected String generateConditionString(String... v) {
+        String whereStatement = "";
+        for(String s : v) {
+            if(s.equals("||"))
+                whereStatement += " OR ";
+            else if(s.equals("&&"))
+                whereStatement += " AND ";
+            else
+                whereStatement += s;
+        }
+        return whereStatement;
+    }
 }

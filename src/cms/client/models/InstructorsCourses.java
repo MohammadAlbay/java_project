@@ -79,11 +79,10 @@ public class InstructorsCourses extends Model {
         Database db = Database.getInstance();
         Statement st = db.getStatement();
         if(st == null) return null;
-        String whereStatement = "";
-        for(String s : v)
-            whereStatement += s+"";
+        String whereStatement = super.generateConditionString(v);
+        
         try {
-            ResultSet result =  st.executeQuery("SELECT course_id, email, semester FROM cms.teacher_courses where "+whereStatement.substring(0, whereStatement.length()-1)+";");
+            ResultSet result =  st.executeQuery("SELECT course_id, email, semester FROM cms.teacher_courses where "+whereStatement+";");
             if(!result.next())
                 return null;
             else {

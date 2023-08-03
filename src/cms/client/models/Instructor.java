@@ -17,7 +17,7 @@ public class Instructor extends Model {
 
     public Instructor() {}
     public Instructor(String email) {
-        get("email = '"+email+"';");
+        get("email = '"+email+"'");
     }
     @Override
     public boolean save() {
@@ -59,11 +59,10 @@ public class Instructor extends Model {
         Database db = Database.getInstance();
         Statement st = db.getStatement();
         if(st == null) return null;
-        String whereStatement = "";
-        for(String s : v)
-            whereStatement += s+",";
+        String whereStatement = super.generateConditionString(v);
+        //System.out.println(whereStatement);
         try {
-            ResultSet result =  st.executeQuery("SELECT email, first_name, last_name, birth_date, `password` FROM cms.users where "+whereStatement.substring(0, whereStatement.length()-1)+" AND is_instructor = 1;");
+            ResultSet result =  st.executeQuery("SELECT email, first_name, last_name, birth_date, `password` FROM cms.users where "+whereStatement+" AND is_instructor = 1;");
             if(!result.next())
                 return null;
             else {
